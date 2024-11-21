@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { quoteService } from '../service/service'
 
-export function QuoteDisplay({ addToFavorites }) {
+export function QuoteDisplay({ addToFavorites, duplicateError }) {
   const [quote, setQuote] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -28,8 +28,19 @@ export function QuoteDisplay({ addToFavorites }) {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg mb-8">
-      <div className="p-6">
+    <div className="bg-white shadow-md rounded-lg mb-8 relative">
+      {duplicateError && (
+        <div className="absolute top-0 left-0 right-0 z-10">
+          <div 
+            className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-t-lg text-center"
+            role="alert"
+          >
+            This quote is already in your favorites!
+          </div>
+        </div>
+      )}
+
+      <div className="p-6 mt-2">
         {loading ? (
           <p className="text-center text-gray-600">Loading...</p>
         ) : quote ? (
